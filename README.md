@@ -34,10 +34,18 @@ This project provides a **web-based control panel** to launch and terminate EC2 
 ---
 
 ## 📁 Project Structure
-├── lambda-EC2/projects-aws/lambda-functions/EC2-launch.py # Lambda function to launch EC2
-├── lambda-EC2/projects-aws/lambda-functions/EC2-terminate.py # Lambda function to Terminate EC2
-├── lambda-EC2/projects-aws/EC2.html #  Frontend HTML dashboard
-├── README.md # Project documentation
+├── lambda-EC2/projects-aws/lambda-functions/EC2-launch.py  
+# Lambda function to launch EC2
+
+├── lambda-EC2/projects-aws/lambda-functions/EC2-terminate.py  
+# Lambda function to terminate EC2
+
+├── lambda-EC2/projects-aws/EC2.html  
+# Frontend HTML dashboard
+
+├── lambda-EC2/projects-aws/README.md  
+# Project documentation
+
 ---
 
 ## 🚀 Getting Started
