@@ -8,6 +8,7 @@ This project provides a **web-based control panel** to launch and terminate EC2 
 
 ## 📸 Screenshot
 
+![image](https://github.com/user-attachments/assets/da31da01-966b-4360-b81e-cfebd435c81b)
 
 
 ## 🧰 Tech Stack
