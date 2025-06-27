@@ -1,5 +1,5 @@
 # lambda-EC2
-# In this project, we are going to integrate Lambda and EC2 to launch and terminate the EC2 instance
+# Launch and Terminate instance by using lambda function
 # 🚀 EC2 Control Panel (AWS Lambda + API Gateway + HTML)
 
 This project provides a **web-based control panel** to launch and terminate EC2 instances in AWS using **Lambda functions**, exposed through **API Gateway** endpoints. The dashboard is built using **HTML, CSS, and JavaScript**, and communicates with AWS services through secure HTTP requests.
