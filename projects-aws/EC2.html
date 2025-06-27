@@ -212,65 +212,6 @@
             font-family: monospace;
         }
 
-        .ami-info {
-            margin-top: 8px;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            display: none;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .ami-info.show {
-            display: flex;
-        }
-
-        .ami-info.amazon-linux {
-            background: linear-gradient(45deg, #ff9500, #ffb84d);
-            color: #663d00;
-        }
-
-        .ami-info.ubuntu {
-            background: linear-gradient(45deg, #e95420, #f47068);
-            color: #2c0b0e;
-        }
-
-        .ami-info.redhat {
-            background: linear-gradient(45deg, #ee0000, #ff4444);
-            color: #660000;
-        }
-
-        .ami-info.centos {
-            background: linear-gradient(45deg, #9dcd30, #b8e64a);
-            color: #3d5200;
-        }
-
-        .ami-info.windows {
-            background: linear-gradient(45deg, #0078d4, #40a6ff);
-            color: #003d6b;
-        }
-
-        .ami-info.suse {
-            background: linear-gradient(45deg, #30ba78, #5dd39e);
-            color: #0d4d2a;
-        }
-
-        .ami-info.debian {
-            background: linear-gradient(45deg, #a80030, #d40047);
-            color: #ffffff;
-        }
-
-        .ami-info.unknown {
-            background: linear-gradient(45deg, #6c757d, #adb5bd);
-            color: #212529;
-        }
-
-        .os-icon {
-            font-size: 18px;
-        }
-
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -302,7 +243,6 @@
             <div class="input-group">
                 <label for="amiId">AMI ID:</label>
                 <input type="text" id="amiId" placeholder="ami-0c02fb55956c7d316" value="ami-0c02fb55956c7d316">
-                <div id="amiInfo" class="ami-info"></div>
             </div>
             <div class="input-group">
                 <label for="instanceType">Instance Type:</label>
@@ -347,94 +287,6 @@
         
         let currentInstanceId = '';
 
-        // AMI Detection Database
-        const amiDatabase = {
-            // Amazon Linux 2023
-            'ami-0c02fb55956c7d316': { os: 'Amazon Linux 2023', type: 'amazon-linux', icon: '🟠' },
-            'ami-0abcdef1234567890': { os: 'Amazon Linux 2023', type: 'amazon-linux', icon: '🟠' },
-            
-            // Amazon Linux 2
-            'ami-0c94855ba95b798c7': { os: 'Amazon Linux 2', type: 'amazon-linux', icon: '🟠' },
-            'ami-0d5eff06f840b45e9': { os: 'Amazon Linux 2', type: 'amazon-linux', icon: '🟠' },
-            
-            // Ubuntu
-            'ami-0e472ba40eb589f49': { os: 'Ubuntu 24.04 LTS', type: 'ubuntu', icon: '🟤' },
-            'ami-0a634ae95e11c6f91': { os: 'Ubuntu 22.04 LTS', type: 'ubuntu', icon: '🟤' },
-            'ami-0c7217cdde317cfec': { os: 'Ubuntu 20.04 LTS', type: 'ubuntu', icon: '🟤' },
-            'ami-0892d3c7ee96c0bf7': { os: 'Ubuntu 18.04 LTS', type: 'ubuntu', icon: '🟤' },
-            
-            // Red Hat Enterprise Linux
-            'ami-0b0af3577fe5e3532': { os: 'RHEL 9', type: 'redhat', icon: '🔴' },
-            'ami-0c322300a1dd5dc79': { os: 'RHEL 8', type: 'redhat', icon: '🔴' },
-            'ami-0a54aef4ef3b5f881': { os: 'RHEL 7', type: 'redhat', icon: '🔴' },
-            
-            // CentOS
-            'ami-0d8f6eb4f641ef691': { os: 'CentOS 8', type: 'centos', icon: '🟢' },
-            'ami-0affd4508a5d2481b': { os: 'CentOS 7', type: 'centos', icon: '🟢' },
-            
-            // Windows Server
-            'ami-0c2b8ca1dad447f8a': { os: 'Windows Server 2022', type: 'windows', icon: '🪟' },
-            'ami-0d70546e43a941d70': { os: 'Windows Server 2019', type: 'windows', icon: '🪟' },
-            'ami-0ec2f9eaf02197e9f': { os: 'Windows Server 2016', type: 'windows', icon: '🪟' },
-            
-            // SUSE Linux
-            'ami-0a72de842ecf5e0ae': { os: 'SUSE Linux Enterprise Server 15', type: 'suse', icon: '🟢' },
-            
-            // Debian
-            'ami-064519b8c76274859': { os: 'Debian 11', type: 'debian', icon: '🔴' },
-            'ami-0d6621c01e8c2de2c': { os: 'Debian 10', type: 'debian', icon: '🔴' }
-        };
-
-        function detectAMI(amiId) {
-            const amiInfo = document.getElementById('amiInfo');
-            
-            if (!amiId || !amiId.startsWith('ami-')) {
-                amiInfo.classList.remove('show');
-                return;
-            }
-
-            // Check exact match first
-            if (amiDatabase[amiId]) {
-                const ami = amiDatabase[amiId];
-                showAMIInfo(ami.os, ami.type, ami.icon);
-                return;
-            }
-
-            // Pattern matching for common AMI naming conventions
-            const patterns = [
-                { regex: /amazon.*linux.*2023/i, os: 'Amazon Linux 2023', type: 'amazon-linux', icon: '🟠' },
-                { regex: /amazon.*linux.*2/i, os: 'Amazon Linux 2', type: 'amazon-linux', icon: '🟠' },
-                { regex: /amazon.*linux/i, os: 'Amazon Linux', type: 'amazon-linux', icon: '🟠' },
-                { regex: /ubuntu.*24/i, os: 'Ubuntu 24.04 LTS', type: 'ubuntu', icon: '🟤' },
-                { regex: /ubuntu.*22/i, os: 'Ubuntu 22.04 LTS', type: 'ubuntu', icon: '🟤' },
-                { regex: /ubuntu.*20/i, os: 'Ubuntu 20.04 LTS', type: 'ubuntu', icon: '🟤' },
-                { regex: /ubuntu/i, os: 'Ubuntu', type: 'ubuntu', icon: '🟤' },
-                { regex: /rhel.*9/i, os: 'Red Hat Enterprise Linux 9', type: 'redhat', icon: '🔴' },
-                { regex: /rhel.*8/i, os: 'Red Hat Enterprise Linux 8', type: 'redhat', icon: '🔴' },
-                { regex: /rhel|red.*hat/i, os: 'Red Hat Enterprise Linux', type: 'redhat', icon: '🔴' },
-                { regex: /centos.*8/i, os: 'CentOS 8', type: 'centos', icon: '🟢' },
-                { regex: /centos/i, os: 'CentOS', type: 'centos', icon: '🟢' },
-                { regex: /windows.*2022/i, os: 'Windows Server 2022', type: 'windows', icon: '🪟' },
-                { regex: /windows.*2019/i, os: 'Windows Server 2019', type: 'windows', icon: '🪟' },
-                { regex: /windows/i, os: 'Windows Server', type: 'windows', icon: '🪟' },
-                { regex: /suse/i, os: 'SUSE Linux', type: 'suse', icon: '🟢' },
-                { regex: /debian/i, os: 'Debian', type: 'debian', icon: '🔴' }
-            ];
-
-            // Try to fetch AMI description (this would require additional API call)
-            // For now, show as unknown with suggestion to verify
-            showAMIInfo('Unknown OS - Please verify AMI details', 'unknown', '❓');
-        }
-
-        function showAMIInfo(osName, osType, icon) {
-            const amiInfo = document.getElementById('amiInfo');
-            amiInfo.innerHTML = `
-                <span class="os-icon">${icon}</span>
-                <span><strong>OS:</strong> ${osName}</span>
-            `;
-            amiInfo.className = `ami-info show ${osType}`;
-        }
-
         async function launchInstance() {
             const launchBtn = document.getElementById('launchBtn');
             const result = document.getElementById('result');
@@ -475,7 +327,6 @@
                             <strong>Instance ID:</strong> ${data.instance_id}<br>
                             <strong>Instance Type:</strong> ${instanceType}<br>
                             <strong>AMI ID:</strong> ${amiId}<br>
-                            <strong>Operating System:</strong> ${getAMIDetails(amiId)}<br>
                             <strong>Name:</strong> ${instanceName}
                         </div>`, 
                         'success'
@@ -549,14 +400,6 @@
             }
         }
 
-        function getAMIDetails(amiId) {
-            if (amiDatabase[amiId]) {
-                const ami = amiDatabase[amiId];
-                return `${ami.icon} ${ami.os}`;
-            }
-            return '❓ Unknown OS';
-        }
-
         function showResult(message, type) {
             const result = document.getElementById('result');
             result.innerHTML = `<div class="result ${type}">${message}</div>`;
@@ -568,18 +411,14 @@
             const savedInstanceType = localStorage.getItem('ec2-instance-type');
             const savedInstanceName = localStorage.getItem('ec2-instance-name');
             
-            if (savedAmiId) {
-                document.getElementById('amiId').value = savedAmiId;
-                detectAMI(savedAmiId);
-            }
+            if (savedAmiId) document.getElementById('amiId').value = savedAmiId;
             if (savedInstanceType) document.getElementById('instanceType').value = savedInstanceType;
             if (savedInstanceName) document.getElementById('instanceName').value = savedInstanceName;
         });
 
-        // Auto-save settings and detect AMI
+        // Auto-save settings
         document.getElementById('amiId').addEventListener('input', function() {
             localStorage.setItem('ec2-ami-id', this.value);
-            detectAMI(this.value);
         });
         
         document.getElementById('instanceType').addEventListener('change', function() {
@@ -588,14 +427,6 @@
         
         document.getElementById('instanceName').addEventListener('input', function() {
             localStorage.setItem('ec2-instance-name', this.value);
-        });
-
-        // Initial AMI detection
-        document.addEventListener('DOMContentLoaded', function() {
-            const amiId = document.getElementById('amiId').value;
-            if (amiId) {
-                detectAMI(amiId);
-            }
         });
     </script>
 </body>
