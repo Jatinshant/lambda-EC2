@@ -34,5 +34,65 @@ This project provides a **web-based control panel** to launch and terminate EC2 
 ---
 
 ## 📁 Project Structure
+├── lambda-EC2/projects-aws/lambda-functions/EC2-launch.py # Lambda function to launch EC2
+├── lambda-EC2/projects-aws/lambda-functions/EC2-terminate.py # Lambda function to Terminate EC2
+├── lambda-EC2/projects-aws/EC2.html #  Frontend HTML dashboard
+├── README.md # Project documentation
+---
+
+## 🚀 Getting Started
+
+### 1. Set up Lambda Functions
+
+- Go to **AWS Lambda Console**
+- Create two functions:
+  - `launch-ec2`
+  - `terminate-ec2`
+- Use the Python code from `launch_lambda.py` and `terminate_lambda.py`
+- Assign an IAM Role with the following permissions:
+  ```json
+  {
+    "Effect": "Allow",
+    "Action": [
+      "ec2:RunInstances",
+      "ec2:TerminateInstances",
+      "ec2:DescribeInstances"
+    ],
+    "Resource": "*"
+  }
+  
+### 2. Create API Gateway Endpoints
+Create a REST API or HTTP API
+
+Set up two endpoints:
+
+POST /launch → connected to launch-ec2 Lambda
+
+POST /terminate → connected to terminate-ec2 Lambda
+
+Enable CORS on both endpoints
+
+Deploy the API and note the base URL
+
+### 3. Configure the Frontend
+Open ec2-control-panel.html
+
+Replace the following with your actual API endpoints:
+---
+const LAUNCH_API_ENDPOINT = 'https://your-api-id.execute-api.region.amazonaws.com/prod/launch';
+const TERMINATE_API_ENDPOINT = 'https://your-api-id.execute-api.region.amazonaws.com/prod/terminate';
+
+---
+🙌 Credits
+Built by Jatin Shant – DevOps enthusiast with a passion for automation and cloud.
+
+---
+
+Let me know if you want me to:
+- Add the Lambda code files (`launch_lambda.py`, `terminate_lambda.py`)
+- Auto-generate a `LICENSE`
+- Generate a sample screenshot or GitHub Pages version of the dashboard
+
+Would you like a `project.zip` with all this structured and ready to push to GitHub?
 
 
