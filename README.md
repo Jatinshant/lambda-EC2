@@ -103,4 +103,7 @@ Let me know if you want me to:
 
 Would you like a `project.zip` with all this structured and ready to push to GitHub?
 
+## 📜 License
+
+This project is open-source and available under the [MIT License](LICENSE).
 
