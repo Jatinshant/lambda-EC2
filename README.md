@@ -1,2 +1,2 @@
 # lambda-EC2
-EC2-Launch and Terminate by using lambda
+# In this project, we are going to integrate Lambda and EC2 to launch and terminate the EC2 instance
